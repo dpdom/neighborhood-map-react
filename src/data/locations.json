@@ -10,5 +10,11 @@
     "tag": "Nature",
     "latitude": 38.139839,
     "longitude": 15.053770
+  },
+  { 
+    "title": "Castroreale",
+    "tag": "Village",
+    "latitude": 38.100409,
+    "longitude": 15.211816
   }
 ]
