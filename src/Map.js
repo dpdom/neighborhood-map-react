@@ -44,9 +44,9 @@ class Map extends React.Component {
    
       let position = {"lat": locations[i].latitude, "lng": locations[i].longitude};
       let title = locations[i].title;
-      
+   
       let marker = new window.google.maps.Marker({
-        
+       
         position: position,
         title: title,
         map: map,
@@ -56,13 +56,8 @@ class Map extends React.Component {
       // The 'click' event to open the info window
       marker.addListener('click', function () { 
         
-        let content = `
-
-          <div class="info-window">
-            <p class = info-window-title>${title}</p>          
-          </div>`;
-        
-        this.writeInfoWindow(marker, content);
+        let content = this.infoWindowContent(locations[i]);        
+        this.openInfoWindow(marker, content);
       }.bind(this));      
       
       marker.addListener('mouseover', function() {
@@ -85,7 +80,7 @@ class Map extends React.Component {
     // Updates the component's state
     this.setState({mapMarkers: markers});   
   }
-  
+ 
 
   loadMap() {    
         
@@ -112,7 +107,22 @@ class Map extends React.Component {
 
 
   // Populates the info window
-  writeInfoWindow (marker, content) {
+  infoWindowContent (location) {
+    
+    let title = location.title;  
+    
+    let content = `
+
+      <div class="info-window">
+        <p class = info-window-title>${title}</p>          
+      </div>`;
+    
+    return content;
+  }
+
+
+  // Opens the info window
+  openInfoWindow (marker, content) {
     
     const map = this.state.map;
     const iWindow = this.state.infoWindow;
@@ -133,6 +143,8 @@ class Map extends React.Component {
     
     // Changes the center of the map to the given LatLng
     map.panTo(location.linkedMarker.getPosition());
+    
+    this.openInfoWindow(location.linkedMarker, this.infoWindowContent(location));
   } 
 
   
