@@ -1,5 +1,10 @@
 import React from 'react';
 import Nav from './Nav.js'
+import redIcon from './assets/map-marker-red.png'
+import greenIcon from './assets/map-marker-green.png'
+
+// Makers' icons here: https://materialdesignicons.com/icon/map-marker
+
 
 class Map extends React.Component {
   
@@ -49,6 +54,7 @@ class Map extends React.Component {
        
         position: position,
         title: title,
+        icon: redIcon,
         map: map,
         animation: window.google.maps.Animation.DROP     
       });
@@ -61,8 +67,13 @@ class Map extends React.Component {
       }.bind(this));      
       
       marker.addListener('mouseover', function() {
-        
-        //TODO
+         
+        marker.setIcon(greenIcon);
+      })
+      
+      marker.addListener('mouseout', function() {
+         
+        marker.setIcon(redIcon);
       })
       
       // Extends the bundaries of the map
@@ -91,7 +102,13 @@ class Map extends React.Component {
       const map = new window.google.maps.Map(mapDOMel, {
         center: {lat: 38.169923, lng: 15.204035},
         zoom: 12,
-        mapTypeControl: true        
+        mapTypeControl: false,        
+        fullscreenControl: true,
+        
+        // https://developers.google.com/maps/documentation/javascript/controls
+        fullscreenControlOptions: {
+          position: window.google.maps.ControlPosition.RIGHT_BOTTOM
+        }
       })    
       
      /*  Creates a new info window (displays text or images 
