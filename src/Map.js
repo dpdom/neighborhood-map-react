@@ -73,6 +73,8 @@ class Map extends React.Component {
       // Extends the bundaries of the map
       bounds.extend(position);      
       
+      locations[i].linkedMarker = marker;
+      
       // Adds the new marker to the markers array
       markers.push(marker);        
     }
@@ -121,13 +123,24 @@ class Map extends React.Component {
     // Opens the info window on the 'marker'
     this.state.infoWindow.open(map, marker);
   }
+ 
+
+  // Passed down to the 'Nav' component. Executed
+  // when the user clicks on a location in the menu
+  onClickPanTo = (ev, location) => {
+ 
+    let map = this.state.map;
+    
+    // Changes the center of the map to the given LatLng
+    map.panTo(location.linkedMarker.getPosition());
+  } 
 
   
   render() { 
-    
+     
     return (
       <div>
-      <Nav/>
+      <Nav locationsToShow={this.state.locations} onLocationClick={this.onClickPanTo}/>
       <div id='map' >
         Loading map...
       </div>

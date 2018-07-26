@@ -2,20 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import MenuIcon from './MenuIcon.js';
 
-/* <a href="javascript:void(0);" className="icon" onClick={this.showNav}>            
-            <i className="fa fa-bars"></i>
-          </a>*/
+
 class Nav extends React.Component {
   
   static propTypes = {
     
-    locationsToShow: PropTypes.array.isRequired    
+    locationsToShow: PropTypes.array.isRequired,   
+    onLocationClick: PropTypes.func.isRequired
   }; 
+
 
   state = {
     
     showPnlBool: false
   }
+
 
   onClickEv = () => {
     
@@ -27,9 +28,10 @@ class Nav extends React.Component {
    
 
   render() { 
-    
+     
     const showPnl = this.state.showPnlBool;    
-    const locations = this.props.locationsToShow;
+    const locations = this.props.locationsToShow; 
+    const callbackOnClick = this.props.onLocationClick;
     let className = '';
     
     if (showPnl) className = 'sidebar-items-container';
@@ -42,13 +44,16 @@ class Nav extends React.Component {
         <MenuIcon onClickEv={this.onClickEv}/>
       
         <div className={className}>
-          <ul>
-            <li>#Item</li>
-            <li>#Item2</li>
-          </ul>
-        
-        </div>        
       
+        <ul> 
+        {
+          locations.map((location, index) => (
+            <li key={index} onClick={(event) => callbackOnClick(event, location)}>{location.title}</li>
+          ))
+        }
+        </ul>  
+        
+        </div>      
       </div>   
     );  
   }  
