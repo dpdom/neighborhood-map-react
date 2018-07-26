@@ -38,7 +38,11 @@ body, .app {
   background-color: #78909C; 
   color: white; 
   position: absolute;
-  z-index: 5;
+  z-index: 5; 
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;          /* Likely future */
 } 
 
 .sidebar-title { 
