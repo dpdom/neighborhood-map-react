@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Nav from './Nav.js'
 
 class Map extends React.Component {
   
@@ -126,8 +126,11 @@ class Map extends React.Component {
   render() { 
     
     return (
+      <div>
+      <Nav/>
       <div id='map' >
         Loading map...
+      </div>
       </div>
     )
   }

@@ -1,4 +1,8 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 html, body, .root {
+  font-family: 'Open Sans', sans-serif;
   height: 100%;
 }
 
@@ -16,9 +20,91 @@ body, .app {
  */
 
 #map {  
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
   position: absolute;
   overflow: hidden;
 }
+
+
+/*
+ * Sidebar styling
+ */
  
+.sidebar-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  background-color: #78909C; 
+  color: white; 
+  position: absolute;
+  z-index: 5;
+} 
+
+.sidebar-title { 
+  flex-basis: auto;
+  margin: 0;
+  text-transform: uppercase;
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 1.2em;  
+  cursor: default;
+}
+
+.sidebar-items-container {
+  flex-basis: 100%;
+}
+
+.hide {  
+  display: none;
+} 
+
+ul {
+  list-style-type: none;   
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  cursor: pointer;
+  padding: 5px 16px;    
+}
+
+li:hover {  
+  background-color: #e8eaf6;  
+  color: #333;
+}
+
+
+/*
+ * 'Hamburger' icon styling (based on: https://www.w3schools.com/howto/howto_css_menu_icon.asp)
+ */
+
+.icon-container {  
+  flex-basis: auto;
+  margin: auto 0 auto auto;
+  padding-right: 10px;
+  cursor: pointer;
+}
+
+.bar1, .bar2, .bar3 {
+  width: 35px;
+  height: 5px;
+  background-color: #333; 
+  margin: 6px 0;
+  transition: 0.4s;
+}
+
+.change .bar1 {
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.change .bar2 {opacity: 0;}
+
+.change .bar3 {
+  -webkit-transform: rotate(45deg) translate(-8px, -8px);
+  transform: rotate(45deg) translate(-8px, -8px);
+}
