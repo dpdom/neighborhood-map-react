@@ -1,18 +1,21 @@
 [
   {
     "title": "Pool of Venus",
+    "searchFriendly": "Piscine di Venere",
     "tag": "Nature",
     "latitude": 38.269366,
     "longitude": 15.224591
   },  
   {
     "title": "Reserve of the Lakes of Marinello",
+    "searchFriendly": "Laghetti di Marinello",
     "tag": "Nature",
     "latitude": 38.139839,
     "longitude": 15.053770
   },
   { 
     "title": "Castroreale",
+    "searchFriendly": "Castroreale",
     "tag": "Village",
     "latitude": 38.100409,
     "longitude": 15.211816
