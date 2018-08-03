@@ -12,7 +12,7 @@ class Map extends React.Component {
     
     map: {},
     locations: require("./data/locations.json"), // Loads locations from 'locations.json'
-    mapMarkers: [],
+    mapMarkers: [], 
     infoWindow: {}  
   };
 
@@ -62,7 +62,11 @@ class Map extends React.Component {
       // The 'click' event to open the info window
       marker.addListener('click', function () { 
         
-        let content = this.infoWindowContent(locations[i]);        
+        let content = this.infoWindowContent(locations[i]);   
+        
+        // Changes the center of the map to the given position
+        map.panTo(marker.getPosition()); 
+        
         this.openInfoWindow(marker, content);
       }.bind(this));      
       
@@ -119,19 +123,37 @@ class Map extends React.Component {
       const infoWindow = new window.google.maps.InfoWindow();     
       this.placeMarkers(map); 
       this.setState({map: map, infoWindow: infoWindow});        
-    }
+    } 
+    
+    // Flickr
+    this.fetchData();console.log("Recap: ", this.state.locations)
   }
 
 
   // Populates the info window
   infoWindowContent (location) {
+  
+    let title = location.title;         
+    let imgArr = location.flickrData.photos.photo;
     
-    let title = location.title;  
+    let imgHTML = '';  
+ 
+    for (let image of imgArr) {
+      
+      imgHTML += `<a class="info-window-author" href=${image.phProfileURL} target="_blank">
+                    <img class="info-window-img" src=${image.imageURL} /> 
+                  </a>`;  
+    }    
     
+    // Add: Showed images belongs to its respective owners. ?
     let content = `
 
       <div class="info-window">
-        <p class = info-window-title>${title}</p>          
+        <h3 class="info-window-title">${title}</h3>   
+        <p>Click on the image to visit the author's profile on flickr!</p>
+        <div class="info-window-flickr">
+          ${imgHTML} 
+        </div>        
       </div>`;
     
     return content;
@@ -150,7 +172,72 @@ class Map extends React.Component {
     // Opens the info window on the 'marker'
     this.state.infoWindow.open(map, marker);
   }
+
+
+  /* 
+  *  Fetchs data from flickr through flickr's API - https://www.flickr.com/services/api/flickr.photos.search.html
+  *  Return a list of photos matching some criteria. Only photos visible to the calling user
+  *  will be returned. To return private or semi-private photos, the caller must be authenticated 
+  *  with 'read' permissions, and have permission to view the photos. Unauthenticated calls will only 
+  *  return public photos.
+  */
+  
+  fetchData = () => {
+    
+    const locations = this.state.locations;    
+    
+    for (let location of locations) {
+      
+      let queryOptions = {
+      
+        method: 'flickr.photos.search',
+        api_key: require("./conf.json").apikey_flickr,   // API application key 
+        sort: 'relevance',   // The order in which to sort returned photos 
+        text: location.searchFriendly,   // A free text search. Photos who's title, description or tags contain the text will be returned 
+        per_page: 10,   // Number of photos to return per page
+        format: 'json', 
+        lat: location.latitude,
+        lon: location.longitude,
+        nojsoncallback: 1   // The flickr's API responds with standard JSON       
+      }
+      
+      // Defines utility methods to work with the query string of a URL
+      var query = new URLSearchParams(queryOptions);
+      
+      fetch('https://api.flickr.com/services/rest/?' + query)
+        .then(function(response) {
+        return response.json();
+      })
+      .then(function(respJson) {
+        
+        respJson.title = location.title;      
+        
+        // Creates URLs in a 'plain' format
+        this.writeFlickrURL(respJson.photos.photo);             
  
+        location.flickrData = respJson;
+      }.bind(this));      
+    }
+  } 
+  
+  
+  // Constructs the source URL to a photo by its ID, server ID, etc..
+  // and URLs to profiles as well
+  writeFlickrURL = (phArray) => {     
+    
+    if (phArray.length > 0) {
+      
+      for (let pic of phArray) {
+        
+        // Constructs the source URL to the photo
+        pic.imageURL = `https://farm${pic.farm}.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}.jpg`;
+        
+        // URL to the author's profile on flickr
+        pic.phProfileURL = `https://www.flickr.com/people/${pic.owner}/`;        
+      }      
+    }    
+  }
+  
 
   // Passed down to the 'Nav' component. Executed
   // when the user clicks on a location in the menu
