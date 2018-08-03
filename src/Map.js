@@ -143,7 +143,7 @@ class Map extends React.Component {
     for (let image of imgArr) {
       
       imgHTML += `<a class="info-window-author" href=${image.phProfileURL} target="_blank">
-                    <img class="info-window-img" src=${image.imageURL} /> 
+                    <img class="info-window-img" alt="A picture of ${title}" src=${image.imageURL} /> 
                   </a>`;  
     }    
     

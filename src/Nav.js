@@ -74,7 +74,9 @@ class Nav extends React.Component {
         <ul> 
         {
           locations.map((location, index) => (
-            <li key={index} onClick={(event) => callbackOnClick(event, location)}>{location.title}</li>
+      
+            // This is not accessible -> <li key={index} onClick={(event) => callbackOnClick(event, location)}>{location.title}</li>
+            <li key={index} onClick={(event) => callbackOnClick(event, location)}><button>{location.title}</button></li>                  
           ))
         }
         </ul>  
