@@ -34,7 +34,7 @@ body, .app {
 .sidebar-container {
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
+  width: 100%;  
   background-color: #78909C; 
   color: white; 
   position: absolute;
@@ -45,7 +45,7 @@ body, .app {
   user-select: none;          /* Likely future */
 } 
 
-.sidebar-title { 
+.sidebar-title {  
   flex-basis: auto;
   margin: 0;
   text-transform: uppercase;
@@ -55,7 +55,7 @@ body, .app {
   font-weight: 400;
   font-size: 1.2em;  
   cursor: default;
-}
+}  
 
 .sidebar-items-container {
   flex-basis: 100%;
@@ -64,7 +64,7 @@ body, .app {
 .hide {  
   display: none;
 } 
-
+ 
 ul {
   list-style-type: none;   
   margin: 0;
@@ -111,4 +111,42 @@ li:hover {
 .change .bar3 {
   -webkit-transform: rotate(45deg) translate(-8px, -8px);
   transform: rotate(45deg) translate(-8px, -8px);
+}
+
+
+/*
+ * Info window styling  
+ */
+
+.info-window-flickr { 
+  display: flex !important;
+  flex-wrap: wrap !important;  
+}
+
+.info-window-title {
+  font-weight: 200;
+  color: #333;
+  font-size: 1.5em;
+  letter-spacing: 1px;
+}
+
+.info-window-author {
+  text-decoration: none;
+}
+
+.info-window-author:hover {
+  text-decoration: underline;
+}
+
+.info-window-img {   
+  width: auto !important; 
+  height: 60px !important; 
+  padding: 1px !important;  
+  opacity: 0.5 !important;
+  filter: alpha(opacity=50) !important; /* For IE8 and earlier */
+} 
+
+.info-window-img:hover  {
+    opacity: 1.0 !important;
+    filter: alpha(opacity=100) !important; /* For IE8 and earlier */
 }
