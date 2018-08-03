@@ -33,14 +33,16 @@ class Nav extends React.Component {
     const locations = this.props.locationsToShow; 
     const callbackOnClick = this.props.onLocationClick;
     let className = '';
+    let classNameTitle = 'sidebar-title';
+    let classNameContainer = 'sidebar-container';
     
-    if (showPnl) className = 'sidebar-items-container';
-    else className = 'sidebar-items-container hide';
-    
+    if (showPnl) className = 'sidebar-items-container'; 
+    else className = 'sidebar-items-container hide';     
+ 
     return (
       
-      <div className="sidebar-container">
-        <h1 className="sidebar-title">Locations</h1>
+      <div className={classNameContainer}>
+        <h1 className={classNameTitle}>Locations</h1>
         <MenuIcon onClickEv={this.onClickEv}/>
       
         <div className={className}>
