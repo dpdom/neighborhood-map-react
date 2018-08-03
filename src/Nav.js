@@ -8,13 +8,16 @@ class Nav extends React.Component {
   static propTypes = {
     
     locationsToShow: PropTypes.array.isRequired,   
-    onLocationClick: PropTypes.func.isRequired
+    onLocationClick: PropTypes.func.isRequired,
+    hideMarkers: PropTypes.func.isRequired
   }; 
 
 
   state = {
     
-    showPnlBool: false
+    showPnlBool: false,
+    query: '',
+    filteredLocations: this.props.locationsToShow
   }
 
 
@@ -25,20 +28,38 @@ class Nav extends React.Component {
     clicked = clicked ? false : true;    
     this.setState({showPnlBool: clicked})   
   }
+  
+  
+  filterLocations = (query) => { 
+     
+    const locations = this.props.locationsToShow;
+    let filtered;
+    
+    //console.log("\n\n");
+    //console.log("Query is: ", query); 
+     
+    filtered = locations.filter( (location) => location.title.toLowerCase().startsWith(query.trim()) );     
+    
+    //console.log("Locations are:  \n", locations);
+    //console.log("\nFilter output is: \n", filtered);
+    this.props.hideMarkers(filtered);
+    this.setState({ query: query.trim() });
+    this.setState({ filteredLocations: filtered });      
+  }
    
 
   render() { 
      
     const showPnl = this.state.showPnlBool;    
-    const locations = this.props.locationsToShow; 
+    const locations = this.state.filteredLocations; 
     const callbackOnClick = this.props.onLocationClick;
     let className = '';
     let classNameTitle = 'sidebar-title';
     let classNameContainer = 'sidebar-container';
     
     if (showPnl) className = 'sidebar-items-container'; 
-    else className = 'sidebar-items-container hide';     
- 
+    else className = 'sidebar-items-container hide';
+    
     return (
       
       <div className={classNameContainer}>
@@ -46,6 +67,9 @@ class Nav extends React.Component {
         <MenuIcon onClickEv={this.onClickEv}/>
       
         <div className={className}>
+        
+        {/* Input field for locations filtering */}
+        <input type="text" className="sidebar-items-search-input" placeholder="Search Location" value={this.state.query} onChange={(event) => this.filterLocations(event.target.value)}/>
       
         <ul> 
         {

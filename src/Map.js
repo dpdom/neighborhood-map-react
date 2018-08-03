@@ -12,7 +12,7 @@ class Map extends React.Component {
     
     map: {},
     locations: require("./data/locations.json"), // Loads locations from 'locations.json'
-    mapMarkers: [], 
+    //mapMarkers: [], 
     infoWindow: {}  
   };
 
@@ -84,7 +84,7 @@ class Map extends React.Component {
       bounds.extend(position);      
       
       locations[i].linkedMarker = marker;
-      
+         
       // Adds the new marker to the markers array
       markers.push(marker);        
     }
@@ -93,7 +93,7 @@ class Map extends React.Component {
     map.fitBounds(bounds);
     
     // Updates the component's state
-    this.setState({mapMarkers: markers});   
+    //this.setState({mapMarkers: markers});   
   }
  
 
@@ -126,7 +126,9 @@ class Map extends React.Component {
     } 
     
     // Flickr
-    this.fetchData();console.log("Recap: ", this.state.locations)
+    this.fetchData();
+    
+    console.log("Recap: ", this.state.locations)
   }
 
 
@@ -166,7 +168,7 @@ class Map extends React.Component {
     const map = this.state.map;
     const iWindow = this.state.infoWindow;
     
-    iWindow.maker = marker;
+    // iWindow.marker = marker;
     iWindow.setContent(content);
     
     // Opens the info window on the 'marker'
@@ -250,13 +252,28 @@ class Map extends React.Component {
     
     this.openInfoWindow(location.linkedMarker, this.infoWindowContent(location));
   } 
+  
+  
+  hideMarkers = (filteredLocations) => {
+    
+    const locations = this.state.locations;
+    
+    // Closing currently showed info window    
+    this.state.infoWindow.close();
+    
+    // Hides all of the markers but doesn't delete them    
+    for (let location of locations) location.linkedMarker.setMap(null);
+    
+    // Shows only locations filtered by the user
+    for (let location of filteredLocations) location.linkedMarker.setMap(this.state.map);         
+  }
 
   
   render() { 
      
     return (
       <div>
-      <Nav locationsToShow={this.state.locations} onLocationClick={this.onClickPanTo}/>
+      <Nav locationsToShow={this.state.locations} onLocationClick={this.onClickPanTo} hideMarkers={this.hideMarkers}/>
       <div id='map' >
         Loading map...
       </div>

@@ -81,6 +81,13 @@ li:hover {
   color: #333;
 }
 
+.sidebar-items-search-input {
+  padding: 12px 20px;
+  margin: 12px 0 10px 16px; 
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
 
 /*
  * 'Hamburger' icon styling (based on: https://www.w3schools.com/howto/howto_css_menu_icon.asp)
