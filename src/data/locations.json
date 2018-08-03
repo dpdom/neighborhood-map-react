@@ -19,5 +19,12 @@
     "tag": "Village",
     "latitude": 38.100409,
     "longitude": 15.211816
+  },
+  { 
+    "title": "Rocche dell'Argimusco",
+    "searchFriendly": "Rocche dell'Argimusco",
+    "tag": "Mystical place",
+    "latitude": 37.989346,
+    "longitude": 15.041252
   }
-]
+] 
