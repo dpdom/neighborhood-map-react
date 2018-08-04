@@ -26,5 +26,12 @@
     "tag": "Mystical place",
     "latitude": 37.989346,
     "longitude": 15.041252
+  },	
+  { 
+    "title": "Roccavaldina",
+    "searchFriendly": "Roccavaldina",
+    "tag": "Village",
+    "latitude": 38.183333,
+    "longitude": 15.366667
   }
 ] 
