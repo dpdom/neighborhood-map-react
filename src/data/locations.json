@@ -33,5 +33,12 @@
     "tag": "Village",
     "latitude": 38.183333,
     "longitude": 15.366667
-  }
+  },
+  { 
+    "title": "Fortified citadel of Milazzo",
+    "searchFriendly": "Castello di Milazzo",
+    "tag": "Historical place",
+    "latitude": 38.230197,
+    "longitude": 15.242474
+  } 
 ] 
