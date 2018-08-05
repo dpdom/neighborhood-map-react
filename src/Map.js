@@ -2,6 +2,7 @@ import React from 'react';
 import Nav from './Nav.js'
 import redIcon from './assets/map-marker-red.png'
 import greenIcon from './assets/map-marker-green.png'
+import logo from './assets/flickr-logo.jpg'
 
 // Makers' icons here: https://materialdesignicons.com/icon/map-marker
 
@@ -10,7 +11,7 @@ class Map extends React.Component {
   
   state = {
     
-    map: {},
+    map: {}, 
     locations: require("./data/locations.json"), // Loads locations from 'locations.json'
     //mapMarkers: [], 
     infoWindow: {}  
@@ -134,7 +135,7 @@ class Map extends React.Component {
 
   // Populates the info window
   infoWindowContent (location) {
-  
+  console.log("lll ", logo)
     let title = location.title;         
     let imgArr = location.flickrData.photos.photo;
     
@@ -155,7 +156,10 @@ class Map extends React.Component {
         <p>Click on the image to visit the author's profile on flickr!</p>
         <div class="info-window-flickr">
           ${imgHTML} 
-        </div>        
+        </div>      
+        <a href="https://www.flickr.com/" target="_blank">
+          <img class="info-window-flickr-logo" alt="Flickr logo" src="${logo}"</img>
+        </a>
       </div>`;
     
     return content;
