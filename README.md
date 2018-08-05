@@ -7,7 +7,6 @@ Features and specifications:
 - all application components render on-screen in a responsive manner;
 - a list-view of location names is provided which displays all locations by default, and displays the filtered subset of locations when a filter is applied;
 - map displays all location markers by default, and displays the filtered subset of location markers when a filter is applied;
-- map markers identify locations;
 - third-party APIs (Flickr's API) provide additional information about each of these locations;
 - 'Neighborhood Map' follows this [Project Specification](https://review.udacity.com/#!/rubrics/1351/view).
 
@@ -15,7 +14,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Installing
 
-To launch the app in development mode follow these steps:
+To launch the app in the development mode follow these steps:
  
 * install [node](https://nodejs.org/it/);
 * clone (`git clone [url]`) this repository on a local folder;
@@ -27,6 +26,11 @@ To launch the app in development mode follow these steps:
 ![A screenshot of the conf.json file](resources/sh_01.PNG "conf.json")
 
 Note that the service worker will work only in production mode.
+
+## Production mode
+
+* run `npm run build` to build the app for production;
+* the app is ready to be deployed.
 
 ## Third-party APIs
 
