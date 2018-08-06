@@ -4,36 +4,25 @@ import redIcon from './assets/map-marker-red.png'
 import greenIcon from './assets/map-marker-green.png'
 import logo from './assets/flickr-logo.jpg'
 
-// Makers' icons here: https://materialdesignicons.com/icon/map-marker
 
+// Makers' icons: https://materialdesignicons.com/icon/map-marker
 
 class Map extends React.Component {
   
   state = {
     
     map: {}, 
-    locations: require("./data/locations.json"), // Loads locations from 'locations.json'
-    //mapMarkers: [], 
+    locations: require("./data/locations.json"),   // Loads locations from 'locations.json'
     infoWindow: {}  
   };
 
  
   componentDidMount() {
     
-    console.log("Debug #componentDidMount()");    
+    //console.log("Debug #componentDidMount()");    
     this.loadMap();    
   }
   
-   
-  componentDidUpdate(prevProps, prevState) {
-    if(prevProps.infoWindow !== this.props.infoWIndow) console.log("Just a test - componentDidUpdate #1");
-    
-    if (prevProps.google !== this.props.google) {
-      //this.loadMap();
-      console.log("Just a test - componentDidUpdate");
-    }
-  } 
-
 
   placeMarkers(map) {
     
@@ -91,10 +80,7 @@ class Map extends React.Component {
     }
     
     // Sets the viewport to contain the markers
-    map.fitBounds(bounds);
-    
-    // Updates the component's state
-    //this.setState({mapMarkers: markers});   
+    map.fitBounds(bounds);    
   }
  
 
@@ -121,39 +107,44 @@ class Map extends React.Component {
       *  #1 Info windows are always anchored to a marker
       *  #2 Only one info window is displayed at a time
       */
-      const infoWindow = new window.google.maps.InfoWindow();     
+      const infoWindow = new window.google.maps.InfoWindow();         
       this.placeMarkers(map); 
       this.setState({map: map, infoWindow: infoWindow});        
     } 
     
-    // Flickr
-    this.fetchData();
-    
-    console.log("Recap: ", this.state.locations)
+    // Retrieving data from Flickr
+    this.fetchData();    
   }
 
 
   // Populates the info window
   infoWindowContent (location) {
-  console.log("lll ", logo)
+  
     let title = location.title;         
-    let imgArr = location.flickrData.photos.photo;
+    let imgArr = [];    
+    let instructions = "Click on the image to visit the author's profile on flickr!";
+    let imgHTML = '';    
     
-    let imgHTML = '';  
- 
+    if(location.flickrData) imgArr = location.flickrData.photos.photo;
+    
     for (let image of imgArr) {
-      
+       
       imgHTML += `<a class="info-window-author" href=${image.phProfileURL} target="_blank">
                     <img class="info-window-img" alt="A picture of ${title}" src=${image.imageURL} /> 
-                  </a>`;  
+                  </a>`;       
     }    
     
-    // Add: Showed images belongs to its respective owners. ?
+    if(imgArr.length === 0) {
+      
+      imgHTML += `<p>No images available :-(</p>`;
+      instructions = '';
+    }
+     
     let content = `
 
       <div class="info-window">
         <h3 class="info-window-title">${title}</h3>   
-        <p>Click on the image to visit the author's profile on flickr!</p>
+        <p>${instructions}</p>
         <div class="info-window-flickr">
           ${imgHTML} 
         </div>      
@@ -200,7 +191,7 @@ class Map extends React.Component {
         api_key: require("./conf.json").apikey_flickr,   // API application key 
         sort: 'relevance',   // The order in which to sort returned photos 
         text: location.searchFriendly,   // A free text search. Photos who's title, description or tags contain the text will be returned 
-        per_page: 10,   // Number of photos to return per page
+        per_page: 5,   // Number of photos to return per page
         format: 'json', 
         lat: location.latitude,
         lon: location.longitude,
@@ -222,7 +213,11 @@ class Map extends React.Component {
         this.writeFlickrURL(respJson.photos.photo);             
  
         location.flickrData = respJson;
-      }.bind(this));      
+      }.bind(this))     
+      
+      .catch( function(error) {
+        console.log("Cannot retreive data: ", error);
+      });
     }
   } 
   
@@ -253,7 +248,7 @@ class Map extends React.Component {
     
     // Changes the center of the map to the given LatLng
     map.panTo(location.linkedMarker.getPosition());
-    
+   
     this.openInfoWindow(location.linkedMarker, this.infoWindowContent(location));
   } 
   
@@ -270,8 +265,8 @@ class Map extends React.Component {
     
     // Shows only locations filtered by the user
     for (let location of filteredLocations) location.linkedMarker.setMap(this.state.map);         
-  }
-
+  }   
+ 
   
   render() { 
      
@@ -285,6 +280,5 @@ class Map extends React.Component {
     )
   }
 }
-
 
 export default Map;

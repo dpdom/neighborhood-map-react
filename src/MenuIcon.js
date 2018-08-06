@@ -14,7 +14,7 @@ class MenuIcon extends React.Component {
   
   static propTypes = {
     
-    onClickEv: PropTypes.func.isRequired    
+    onClickEv: PropTypes.func.isRequired   // Handles the button status    
   };
       
  
@@ -25,7 +25,7 @@ class MenuIcon extends React.Component {
     let divEl = document.querySelector('.icon-container');  
     
     // The user interacts with the button by clicking a mouse button
-    // or by pressing a key (space and enter keys)
+    // or by pressing a key (space or enter keys)
     if (ev.key === " " || ev.key === "Enter" || ev.type === "click" ) {
       
       if(!(ev.type === "click")) ev.preventDefault();      
@@ -61,8 +61,7 @@ class MenuIcon extends React.Component {
     return (
       
      <div role="button" tabIndex="0" aria-pressed="false" className="icon-container" onClick={(event) => this.handleUserInteraction(event)} onKeyPress={(event) => this.handleUserInteraction(event)} 
-      onFocus={(event) => this.handleFocus(event)} onBlur={(event) => this.handleFocus(event)}> 
-      
+      onFocus={(event) => this.handleFocus(event)} onBlur={(event) => this.handleFocus(event)}>       
         <div className="bar1"></div>
         <div className="bar2"></div>
         <div className="bar3"></div>

@@ -12,7 +12,7 @@ class App extends Component {
         {
           (!this.props.loaded) && (
             <div className="error-container">
-              <p className="error-message-fullscreen">Cannot load Google Maps </p>               
+              <p className="error-message-fullscreen">Cannot load Google Maps</p>               
             </div>                      		
           )
 				}  

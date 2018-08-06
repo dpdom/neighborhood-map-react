@@ -8,8 +8,8 @@ class Nav extends React.Component {
   static propTypes = {
     
     locationsToShow: PropTypes.array.isRequired,   
-    onLocationClick: PropTypes.func.isRequired,
-    hideMarkers: PropTypes.func.isRequired
+    onLocationClick: PropTypes.func.isRequired,   // Changes the center of the map, opens the info window  
+    hideMarkers: PropTypes.func.isRequired   // Hides filtered locations
   }; 
 
 
@@ -21,6 +21,7 @@ class Nav extends React.Component {
   }
 
 
+  // Handles the button status 
   onClickEv = () => {
     
     let clicked = this.state.showPnlBool;
@@ -30,29 +31,27 @@ class Nav extends React.Component {
   }
   
   
+  // Filters locations according to the 
+  // user input 
   filterLocations = (query) => { 
      
     const locations = this.props.locationsToShow;
-    let filtered;
-    
-    //console.log("\n\n");
-    //console.log("Query is: ", query); 
+    let filtered;    
      
-    filtered = locations.filter( (location) => location.title.toLowerCase().startsWith(query.trim()) );     
+    filtered = locations.filter( (location) => location.title.toLowerCase().startsWith(query.trim()) );         
     
-    //console.log("Locations are:  \n", locations);
-    //console.log("\nFilter output is: \n", filtered);
-    this.props.hideMarkers(filtered);
-    this.setState({ query: query.trim() });
-    this.setState({ filteredLocations: filtered });      
+    this.props.hideMarkers(filtered);   // Hides markers accordingly
+    this.setState({ query: query.trim() });   // Updates the query
+    this.setState({ filteredLocations: filtered });   // Updates the component state      
   }
    
 
   render() { 
      
-    const showPnl = this.state.showPnlBool;    
+    const showPnl = this.state.showPnlBool;   // True: panel is showed
     const locations = this.state.filteredLocations; 
     const callbackOnClick = this.props.onLocationClick;
+    
     let className = '';
     let classNameTitle = 'sidebar-title';
     let classNameContainer = 'sidebar-container';
@@ -73,9 +72,9 @@ class Nav extends React.Component {
       
         <ul> 
         {
-          locations.map((location, index) => (
-      
-            // This is not accessible -> <li key={index} onClick={(event) => callbackOnClick(event, location)}>{location.title}</li>
+          locations.map((location, index) => (      
+             
+            /* List-view of location names */ 
             <li key={index} onClick={(event) => callbackOnClick(event, location)}><button>{location.title}</button></li>                  
           ))
         }
@@ -86,6 +85,5 @@ class Nav extends React.Component {
     );  
   }  
 }
-
 
 export default Nav;
