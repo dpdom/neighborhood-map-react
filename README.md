@@ -23,7 +23,7 @@ To launch the app in the development mode follow these steps:
 * edit the conf.json file and insert a valid API key;
 * the app will be reachable at the address [http://localhost:3000/](http://localhost:3000/).
 
-![A screenshot of the conf.json file](resources/sh_01.PNG "conf.json")
+![A screenshot of the conf.json file](sh_01.PNG "conf.json")
 
 Note that the service worker will work only in production mode.
 
@@ -47,3 +47,4 @@ The application utilizes the Google Maps API and the [Flickr API](https://www.fl
 
 ## Screenshot
 
+![A screenshot of the application](sh_02.jpg "App screenshot")
