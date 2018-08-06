@@ -18,9 +18,10 @@ class App extends Component {
 				}  
         { 
           (this.props.loaded) && (            
-              <Map google={this.props.google}/>                              		
+              <Map google={this.props.google}/>   
+            
           )
-				}
+				} 
       </div>    
     );    
   }

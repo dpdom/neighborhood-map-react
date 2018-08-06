@@ -275,7 +275,7 @@ class Map extends React.Component {
       <Nav locationsToShow={this.state.locations} onLocationClick={this.onClickPanTo} hideMarkers={this.hideMarkers}/>
       <div id='map' >
         <p className="loading-message">Loading the map...</p> 
-      </div>
+      </div>       
       </div>
     )
   }
