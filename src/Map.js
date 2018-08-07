@@ -12,6 +12,7 @@ class Map extends React.Component {
   state = {
     
     map: {}, 
+    prevSelected: {},
     locations: require("./data/locations.json"),   // Loads locations from 'locations.json'
     infoWindow: {}  
   };
@@ -58,6 +59,11 @@ class Map extends React.Component {
         map.panTo(marker.getPosition()); 
         
         this.openInfoWindow(marker, content);
+        
+        this.toggleAnimation(marker);
+
+        // Keeps track of previously selected marker
+        this.setState({prevSelected: marker});
       }.bind(this));      
       
       marker.addListener('mouseover', function() {
@@ -245,12 +251,51 @@ class Map extends React.Component {
   onClickPanTo = (ev, location) => {
  
     let map = this.state.map;
-    
+    this.setState({prevSelected: location.linkedMarker})
     // Changes the center of the map to the given LatLng
     map.panTo(location.linkedMarker.getPosition());
-   
+    
+    this.toggleAnimation(location.linkedMarker);
+    
+    // Keeps track of previously selected marker
+    this.setState({prevSelected: location.linkedMarker});
+    
     this.openInfoWindow(location.linkedMarker, this.infoWindowContent(location));
-  } 
+  }
+  
+  
+  /* 
+   * Reference:
+   *
+   * https://developers.google.com/maps/documentation/javascript/examples/marker-animations
+   * https://stackoverflow.com/questions/20328326/google-maps-api-v3-markers-dont-always-continuously-bounce
+   *
+   * Bug: setting 'marker.setAnimation(null);' seems not working on Chrome; accordingly to the stackoverflow answer,
+   * value '-1' works.
+   */
+  toggleAnimation = (marker) => { 
+        
+    const prevSelectedMarker = (typeof this.state.prevSelected.getMap === 'function') ? this.state.prevSelected : null;
+    
+    // BOUNCE: the marker bounces in place
+    const animation = window.google.maps.Animation.BOUNCE;
+ 
+    // Map has just been loaded; first user interaction. Previously selected marker is 'null'
+    if ( prevSelectedMarker === null && marker && (marker.getAnimation() === -1 || marker.getAnimation() === null) ) marker.setAnimation(animation); 
+    
+    if(prevSelectedMarker !== null && marker !== null) {
+      
+      // Selected marker is different from the previous one
+      if( prevSelectedMarker !== marker && prevSelectedMarker.getAnimation() !== -1 ) {
+ 
+        // Stops bouncing on the previous selected marker
+        prevSelectedMarker.setAnimation(-1);
+        
+        // Animates the currently selected marker
+        marker.setAnimation(animation);              
+      }     
+    }  
+  }
   
   
   hideMarkers = (filteredLocations) => {
@@ -268,8 +313,8 @@ class Map extends React.Component {
   }   
  
   
-  render() { 
-     
+  render() {  
+ 
     return (
       <div>
       <Nav locationsToShow={this.state.locations} onLocationClick={this.onClickPanTo} hideMarkers={this.hideMarkers}/>
