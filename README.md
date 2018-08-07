@@ -25,7 +25,7 @@ To launch the app in the development mode follow these steps:
 
 ![A screenshot of the conf.json file](sh_01.PNG "conf.json")
 
-Note that the service worker will work only in production mode.
+Note that the service worker will work only in [production mode](#production-mode).
 
 ## Production mode
 
