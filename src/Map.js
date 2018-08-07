@@ -17,10 +17,20 @@ class Map extends React.Component {
     infoWindow: {}  
   };
 
+  
+  gm_authFailure() {
+    window.alert("Authentication error. Please check your API key!");
+  }
+
  
   componentDidMount() {
     
     //console.log("Debug #componentDidMount()");    
+    
+    // Based on the Udacity feeback - binds the gm_authFailure function to the window
+    // context so that it can be called automatically. 
+    window.gm_authFailure = this.gm_authFailure;
+    
     this.loadMap();    
   }
   
