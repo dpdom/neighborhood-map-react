@@ -222,7 +222,7 @@ class Map extends React.Component {
       }.bind(this))     
       
       .catch( function(error) {
-        console.log("Cannot retreive data: ", error);
+        alert("Cannot retreive data: ", error);
       });
     }
   } 
