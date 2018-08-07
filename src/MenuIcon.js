@@ -19,9 +19,8 @@ class MenuIcon extends React.Component {
       
  
   // Handles the user interaction 
-  handleUserInteraction (ev) { 
-    
-    const button = ev.target;   
+  handleUserInteraction (ev) {  
+     
     let divEl = document.querySelector('.icon-container');  
     
     // The user interacts with the button by clicking a mouse button
@@ -36,8 +35,8 @@ class MenuIcon extends React.Component {
       this.props.onClickEv();    
       
       // Change the aria-pressed attribute on the button
-      if(button.getAttribute("aria-pressed") === 'true') button.setAttribute("aria-pressed", false)
-      else button.setAttribute("aria-pressed", true)
+      if(divEl.getAttribute("aria-pressed") === 'true') divEl.setAttribute("aria-pressed", false)
+      else divEl.setAttribute("aria-pressed", true)
     }
   }
 
