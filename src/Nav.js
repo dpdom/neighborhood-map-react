@@ -70,12 +70,12 @@ class Nav extends React.Component {
         {/* Input field for locations filtering */}
         <input type="text" className="sidebar-items-search-input" placeholder="Search Location" value={this.state.query} onChange={(event) => this.filterLocations(event.target.value)}/>
       
-        <ul> 
+        <ul role="list"> 
         {
           locations.map((location, index) => (      
              
             /* List-view of location names */ 
-            <li key={index} onClick={(event) => callbackOnClick(event, location)}><button>{location.title}</button></li>                  
+            <li role="listitem" key={index} onClick={(event) => callbackOnClick(event, location)}><button role="button">{location.title}</button></li>                  
           ))
         }
         </ul>  
